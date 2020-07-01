@@ -1,0 +1,3 @@
+outputfiles/*
+!outputFiles/placeholder.txt
+__pycache__/
