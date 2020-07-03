@@ -56,7 +56,7 @@ port_destination = 47814
 # Each number corresponds to in how many  
 # CPU cycles the parameter is generated.
 # ========================================
-frequency_buffer = 3 
+frequency_buffer = 3
 # downlink
 frequency_land_takeoff = 7
 frequency_pitch_roll = 2
@@ -156,7 +156,8 @@ def layer_application(buffer, downlink, i, uplink):
 # ======== Transport layer - Check the UDP buffer and generate packets
 def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 		pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous, uplink):
-	if i % frequency_buffer == 0: 
+	if i % frequency_buffer == 0:
+			first_loop = True
 			j, k = 0, 0
 			buffer_length = len(buffer)
 
@@ -167,7 +168,7 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 				
 				#if buffer[len(buffer) - 1 - k] == 'l' and buffer[len(buffer) - 2 - k] != 'l': # generate packets based on one parameter - old method
 				if (downlink and (buffer[len(buffer) - 1 - k] != buffer[len(buffer) - 2 - k])) or uplink: # generate packets per parameter - new method
-					if (downlink and delayProb > 0.95) or (uplink and delayProb > 0.8): # probability for processing delay. Probability for dl and ul different to make the 2nd peak obvious on DL
+					if not first_loop and ((downlink and delayProb > 0.95) or (uplink and delayProb > 0.8)): # probability for processing delay. Probability for dl and ul different to make the 2nd peak obvious on DL
 						time_sleep = np.random.uniform(0, frequency_buffer / 10) # generate processing delay
 						time.sleep(time_sleep)
 
@@ -186,6 +187,7 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 					datarate, firstrun, pkt, pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous = statistics_results(datarate, # generate stats
 							firstrun, pkt, pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous)
 					j += 1
+				first_loop = False
 			sys.stdout.write("Number of generated packets = %d out of %d   \r" %(len(pkt_interarrival), num_packets))
 			sys.stdout.flush()
 	return buffer, datarate, firstrun, pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous
@@ -316,7 +318,7 @@ def statistics_results(datarate, firstrun, pkt, pkt_interarrival, pkt_length, pk
 	time_difference = float(pkt.time - time_previous) * 1000 if time_previous != 0 else 0 # multiply by 1000 to convert into ms
 	pkt_interarrival.append(float(time_difference))
 	pkt_length.append(int(len(pkt)))
-	if int(time_previous) != int(pkt.time): # divide by 100 to convert into sec
+	if int(time_previous) != int(pkt.time): 
 		if not firstrun: datarate.append(float(pkt_length_total * 8 / 1000)) # multiply by 8 to convert bytes to bits, divide by 1000 to convert into kbps
 		pkt_length_total = 0
 		firstrun = False
