@@ -30,8 +30,8 @@ Generated results are saved in the folder *outputfiles/*:
 - **.pcap**: The record of the generated packets
 - **.pdf**: The distribution graphs of the statistics in *.csv* file
 
-## uav_datatraces/
-Sample of original UDP data traces of the UAVs (DJI Spark, DJI Mavic and Parrot AR 2.0) are provided for the ones who want to observe the actual UAV data traffic characteristics. These traces are collected during the field measurements for our paper. For the details of the measurements, you may refer to Section III of the paper. 
+## uav_datatraces.zip
+Sample of original UDP data traces of the UAVs (DJI Spark, DJI Mavic and Parrot AR 2.0) are provided to observe the actual UAV data traffic. For the details of the measurements, you may refer to the Section III of the paper. 
 
 Note that the MAC addresses are changed and the payloads are removed from the packets. 
 
