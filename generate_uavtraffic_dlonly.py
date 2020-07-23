@@ -36,7 +36,7 @@ label_x = ['Data Rate (kbps)', 'Packet Inter-arrival (ms)', 'Packet Length (byte
 label_y = 'Density'
 legend = 'Simulated data'
 legend_location = (0.5, 0.05)
-numofbins = [25, 20, 15] # num of bins for hist plots. [15, 20, 10] 
+numofbins = [15, 20, 10] # recommended bin sizes for data rate, packet interval, pkt length, respectively 10], for ul: []
 
 # outputfiles-related
 outputfile_packets_extension = 'pcap'
@@ -65,7 +65,7 @@ frequency_return_home = 13 # 5
 frequency_test = 13
 # uplink
 frequency_batterystatus_camerastatus = 6
-frequency_imustatus_rotorstatus = 3
+frequency_imustatus_rotorstatus = 2
 frequency_video = 1
 
 # ======== Send downlink data to UDP buffer
@@ -109,14 +109,13 @@ def generate_data_downlink():
 # ======== Generate data for uplink channel
 def generate_data_uplink():
 	# telemetry data
-	batterystatus =  'b' * np.random.choice([2**5, 2**6])
-	camerastatus = 'm' * np.random.choice([2**5, 2**6])
-	imustatus = 'i' * np.random.choice([2**5, 2**6])
-	rotorstatus = 'o' * np.random.choice([2**5, 2**6])
+	batterystatus =  'b' * np.random.choice([2**5, 2**6, 2**7])
+	camerastatus = 'm' * np.random.choice([2**5, 2**6, 2**7])
+	imustatus = 'i' * np.random.choice([2**5, 2**6, 2**7])
+	rotorstatus = 'o' * np.random.choice([2**5, 2**6, 2**7])
 
 	# video data
-	video = 'v' * int(np.random.normal(3000, 1500))# np.random.normal(6500, 1500)) # range is based on the actual measured video data from DJI Spark
-	#video = 'v' * int(1 / np.random.exponential(2) * 1000)
+	video = 'v' * int(np.random.normal(6500, 1500)) # range is based on the actual measured video data from DJI Spark
 	return batterystatus, camerastatus, imustatus, rotorstatus, video
 
 # ======== Generate distribution graphs
@@ -166,10 +165,9 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 		first_loop = True
 		j, k = 0, 0
 		buffer_length = len(buffer)
-		if downlink: 
-			sleep_dl = np.random.exponential(0.2) * 0.01 + 0.015
-			#print(np.random.exponential(0.5))
-			time.sleep(sleep_dl)
+		sleep_dl = np.random.exponential(0.2) * 0.01 + 0.015
+		#print(np.random.exponential(0.5))
+		time.sleep(sleep_dl)
 		while True:
 			if (downlink and len(buffer) == 0) or (uplink and (j == math.ceil(buffer_length / pkt_length_maximum))): # buffer is emptied, exit the loop
 				break
@@ -179,13 +177,9 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 			if (downlink and (buffer[len(buffer) - 1 - k] != buffer[len(buffer) - 2 - k])) or uplink: # generate packets per parameter - new method
 				if not first_loop and ((downlink and delayProb > 0.95) or (uplink and delayProb > 0.8)): # probability for processing delay. Probability for dl and ul different to make the 2nd peak obvious on DL
 					#time_sleep = np.random.uniform(0, frequency_buffer / 10) # generate processing delay
-					if downlink: time_sleep = np.random.uniform(0, frequency_buffer / 150) # generate processing delay
-					elif uplink: time_sleep = np.random.exponential(0.2) * 0.05
+					time_sleep = np.random.uniform(0, frequency_buffer / 150) # generate processing delay
 					#time_sleep = np.random.exponential(0.2) * frequency_buffer / 250 
 					time.sleep(time_sleep)
-				if not first_loop and (uplink and delayProb > 0.97):
-					sleep_ul = np.random.exponential(1) * 0.01 + 0.025
-					time.sleep(sleep_ul)
 
 			#if downlink and buffer[len(buffer) - 1 - k] == 'l' and buffer[len(buffer) - 2 - k] != 'l': # generate packets based on one parameter - old method
 			if downlink and (buffer[len(buffer) - 1 - k] != buffer[len(buffer) - 2 - k]): # generate downlink packets
@@ -242,7 +236,7 @@ def main():
 		i += 1
 		#if i == 255: i = 0
 		#print(i)
-		#print("\n\nLeftover buffer: %d\n" %len(buffer))
+		#print("Leftover buffer: %d\n" %len(buffer))
 		if len(pkt_interarrival) >= int(args.n): # requested number of packets generated
 			break
 		#if i == 1500:
