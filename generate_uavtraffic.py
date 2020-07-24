@@ -69,7 +69,7 @@ frequency_imustatus_rotorstatus = 3
 frequency_video = 1
 
 # ======== Send downlink data to UDP buffer
-def data_to_buffer_downlink(buffer, i, land_takeoff, pitch_roll, return_home, throttle_yaw, test):
+def data_to_buffer_downlink(buffer, i, land_takeoff, pitch_roll, return_home, throttle_yaw):
 	# add data to UDP buffer
 	if i % frequency_throttle_yaw == 0:
 		buffer += (throttle_yaw)
@@ -79,8 +79,6 @@ def data_to_buffer_downlink(buffer, i, land_takeoff, pitch_roll, return_home, th
 		buffer += (land_takeoff)
 	if i % frequency_return_home == 0:
 		buffer += (return_home)
-	#if i % frequency_test == 0:
-	#	buffer += (test)
 	return buffer
 
 # ======== Send uplink data to UDP buffer
@@ -99,12 +97,12 @@ def data_to_buffer_uplink(batterystatus, buffer, camerastatus,
 
 # ======== Generate data for downlink channel
 def generate_data_downlink():
-	test = 'x' * np.random.choice([2**5 + 2**4, 2**6 + 2**4])
 	land_takeoff = 't' * np.random.choice([2**5, 2**6, 2**7])
 	pitch_roll = 'r' * np.random.choice([2**5 + 2**4, 2**6])
 	return_home = 'h' * np.random.choice([2**5 + 2**4, 2**6 + 2**4])
 	throttle_yaw =  'l' * np.random.choice([2**5, 2**5 + 2**4])
-	return land_takeoff, pitch_roll, return_home, throttle_yaw, test
+
+	return land_takeoff, pitch_roll, return_home, throttle_yaw
 
 # ======== Generate data for uplink channel
 def generate_data_uplink():
@@ -113,10 +111,9 @@ def generate_data_uplink():
 	camerastatus = 'm' * np.random.choice([2**5, 2**6])
 	imustatus = 'i' * np.random.choice([2**5, 2**6])
 	rotorstatus = 'o' * np.random.choice([2**5, 2**6])
-
 	# video data
-	video = 'v' * int(np.random.normal(3000, 1500))# np.random.normal(6500, 1500)) # range is based on the actual measured video data from DJI Spark
-	#video = 'v' * int(1 / np.random.exponential(2) * 1000)
+	video = 'v' * int(np.random.normal(3000, 1500)) 
+
 	return batterystatus, camerastatus, imustatus, rotorstatus, video
 
 # ======== Generate distribution graphs
@@ -150,9 +147,9 @@ def histogram(bins, data, label_x, label_y, plot):
 # ======== Application layer - Generate data based on the applications
 def layer_application(buffer, downlink, i, uplink):
 	if downlink:
-		land_takeoff, pitch_roll, return_home, throttle_yaw, test = generate_data_downlink() # fetch data
+		land_takeoff, pitch_roll, return_home, throttle_yaw = generate_data_downlink() # fetch data
 		buffer = data_to_buffer_downlink(buffer, i, land_takeoff, pitch_roll, # send data to buffer
-				return_home, throttle_yaw, test)
+				return_home, throttle_yaw)
 	else:
 		batterystatus, camerastatus, imustatus, rotorstatus, video = generate_data_uplink() # fetch data
 		buffer = data_to_buffer_uplink(batterystatus, buffer, camerastatus, i, # send data to buffer
@@ -167,8 +164,7 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 		j, k = 0, 0
 		buffer_length = len(buffer)
 		if downlink: 
-			sleep_dl = np.random.exponential(0.2) * 0.01 + 0.015
-			#print(np.random.exponential(0.5))
+			sleep_dl = np.random.exponential(0.2) * 0.01 + 0.015 # generate processing delay
 			time.sleep(sleep_dl)
 		while True:
 			if (downlink and len(buffer) == 0) or (uplink and (j == math.ceil(buffer_length / pkt_length_maximum))): # buffer is emptied, exit the loop
@@ -178,10 +174,8 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 			#if buffer[len(buffer) - 1 - k] == 'l' and buffer[len(buffer) - 2 - k] != 'l': # generate packets based on one parameter - old method
 			if (downlink and (buffer[len(buffer) - 1 - k] != buffer[len(buffer) - 2 - k])) or uplink: # generate packets per parameter - new method
 				if not first_loop and ((downlink and delayProb > 0.95) or (uplink and delayProb > 0.8)): # probability for processing delay. Probability for dl and ul different to make the 2nd peak obvious on DL
-					#time_sleep = np.random.uniform(0, frequency_buffer / 10) # generate processing delay
-					if downlink: time_sleep = np.random.uniform(0, frequency_buffer / 150) # generate processing delay
-					elif uplink: time_sleep = np.random.exponential(0.2) * 0.05
-					#time_sleep = np.random.exponential(0.2) * frequency_buffer / 250 
+					if downlink: time_sleep = np.random.uniform(0, frequency_buffer / 150) # generate processing delay for dl
+					elif uplink: time_sleep = np.random.exponential(0.2) * 0.05 # generate processing delay for ul
 					time.sleep(time_sleep)
 				if not first_loop and (uplink and delayProb > 0.97):
 					sleep_ul = np.random.exponential(1) * 0.01 + 0.025
@@ -195,8 +189,6 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 						firstrun, pkt, pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous)
 				k = 0
 			elif downlink and k == len(buffer): 
-				#print("Last pkt buffer: %s" %buffer)
-				#print("Last pkt len: %d" %len(buffer))
 				pkt = pkt_create(buffer) # generate packet
 				buffer = '' # remove packet from buffer
 				datarate, firstrun, pkt, pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous = statistics_results(datarate, # generate stats
@@ -206,7 +198,6 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 				k += 1
 			elif uplink: # generate uplink packets
 				if j == math.ceil(buffer_length / pkt_length_maximum) - 1: # last pkt
-				 	#print("Last pkt len: %d" %len(buffer))
 				 	pkt = pkt_create(buffer) # generate packet
 				 	buffer = '' # buffer[:len(buffer) - 1 - pkt_length_maximum] # remove packet from buffer
 				 	datarate, firstrun, pkt, pkt_interarrival, pkt_length, pkt_length_total, pkt_list, time_previous = statistics_results(datarate, # generate stats
@@ -240,14 +231,9 @@ def main():
 				buffer, datarate, args.downlink, firstrun, i, int(args.n), pkt_interarrival, pkt_length, 
 				pkt_length_total, pkt_list, time_previous, args.uplink)
 		i += 1
-		#if i == 255: i = 0
-		#print(i)
-		#print("\n\nLeftover buffer: %d\n" %len(buffer))
-		if len(pkt_interarrival) >= int(args.n): # requested number of packets generated
-			break
-		#if i == 1500:
-		#	break
-		#time.sleep(0.1)
+		
+		if len(pkt_interarrival) >= int(args.n): break # requested number of packets generated
+
 	print("\nPacket generation is completed!\nGraph is being prepared, please hold on...")
 	exectime = float(time.time()) - starttime
 	print("Total execution time: %d s" %exectime)
