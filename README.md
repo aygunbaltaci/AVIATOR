@@ -20,7 +20,7 @@ UAVDataGenerator is a UAV-RC data traffic generation tool based on the data dist
 - *-n* is the number of packets to generate
 
 **Keep in mind**
-- You should generate at least **~5000 packets** to observe the distributions correctly.
+- You should generate **~15000 packets for DL and 30000 packets for UL** channels to observe the distributions correctly.
 - For more information regarding the traffic models, please refer to our paper.
 - For graph-related settings, you may find them all in *config_matplotlibrc.py*, which is an excerpt of [matplotlibrc configuration file](https://matplotlib.org/3.2.1/tutorials/introductory/customizing.html). 
 
