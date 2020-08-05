@@ -98,9 +98,9 @@ def data_to_buffer_uplink(batterystatus, buffer, camerastatus,
 # ======== Generate data for downlink channel
 def generate_data_downlink():
 	land_takeoff = 't' * np.random.choice([2**5, 2**6, 2**7])
-	pitch_roll = 'r' * np.random.choice([2**5 + 2**4, 2**6])
-	return_home = 'h' * np.random.choice([2**5 + 2**4, 2**6 + 2**4])
-	throttle_yaw =  'l' * np.random.choice([2**5, 2**5 + 2**4])
+	pitch_roll = 'r' * np.random.choice([2**5 + 2**4, 2**5, 2**6])
+	return_home = 'h' * np.random.choice([2**5 + 2**4, 2**6 + 2**4, 2**6])
+	throttle_yaw =  'l' * np.random.choice([2**5, 2**5 + 2**4, 2**6])
 
 	return land_takeoff, pitch_roll, return_home, throttle_yaw
 
@@ -174,10 +174,10 @@ def layer_transport(buffer, datarate, downlink, firstrun, i, num_packets,
 			#if buffer[len(buffer) - 1 - k] == 'l' and buffer[len(buffer) - 2 - k] != 'l': # generate packets based on one parameter - old method
 			if (downlink and (buffer[len(buffer) - 1 - k] != buffer[len(buffer) - 2 - k])) or uplink: # generate packets per parameter - new method
 				if not first_loop and ((downlink and delayProb > 0.95) or (uplink and delayProb > 0.8)): # probability for processing delay. Probability for dl and ul different to make the 2nd peak obvious on DL
-					if downlink: time_sleep = np.random.uniform(0, frequency_buffer / 150) # generate processing delay for dl
-					elif uplink: time_sleep = np.random.exponential(0.2) * 0.05 # generate processing delay for ul
+					# time_sleep = 0 # np.random.exponential(0.2) * 0.05 # generate processing delay#time_sleep = np.random.uniform(0, frequency_buffer / 20) # generate processing delay for dl
+					time_sleep = np.random.exponential(0.2) * 0.05 # generate processing delay for ul
 					time.sleep(time_sleep)
-				if not first_loop and (uplink and delayProb > 0.97):
+				if not first_loop and (delayProb > 0.97):
 					sleep_ul = np.random.exponential(1) * 0.01 + 0.025
 					time.sleep(sleep_ul)
 
