@@ -4,7 +4,7 @@
 
 AVIATOR is a UAV-RC data traffic generation tool based on the data distribution models derived from our experimental UAV measurements. It generates UDP packets according to the data rate, inter-packet interval and packet length distributions of commercial UAV-RC traffic (DJI Spark, DJI Mavic Air and Parrot Spark). AVIATOR records the generated packets as well as their statistical results. It is the outcome of our paper *[Experimental Data Traffic Modeling and Network Performance Analysis of UAVs]()*, to be presented at *[2021 IEEE International Conference on Computer Communications (INFOCOM)](https://infocom2021.ieee-infocom.org/)*. 
 
-AVIATOR can be utilized in variety of UAV-related works. With scientific studies as the primary consideration, AVIATOR can be used to study the UAV traffic characteristics, to design UAV/airborne communication systems, to provide input traffic data for UAV/airborne simulators as well as emulators, or simply as a data traffic generator for other internet applications.   
+AVIATOR can be utilized in variety of UAV-related works: E.g., to study the UAV traffic characteristics, to design UAV/airborne communication systems, to provide input traffic data for UAV/airborne simulators as well as emulators, or simply as a data traffic generator for other internet applications.   
 
 ## Citation
 
