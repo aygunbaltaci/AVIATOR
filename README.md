@@ -8,7 +8,7 @@ AVIATOR can be utilized in variety of UAV-related works: E.g., to study the UAV 
 
 ## Citation
 
-Please cite AVIATOR in your work if you find it useful:  
+If you use AVIATOR in your work, please cite the paper:  
 
 ```bibtex
 @inproceedings{aviator,
