@@ -1,6 +1,25 @@
 # AVIATOR (uAV communIcation dAta Traffic generatOR) 
 
-AVIATOR is a UAV-RC data traffic generation tool based on the data distribution models derived from our experimental UAV measurements. It is the outcome of our paper *[Experimental Data Traffic Modeling and Network Performance Analysis of UAVs]()*, which is presented at *[xxx]()*. 
+AVIATOR is a UAV-RC data traffic generation tool based on the data distribution models derived from our experimental UAV measurements. It generates UDP packets according to the data rate, inter-packet interval and packet length distributions of commercial UAV-RC traffic (DJI Spark, DJI Mavic Air and Parrot Spark). AVIATOR records the generated packets as well as their statistical results. It is the outcome of our paper *[Experimental Data Traffic Modeling and Network Performance Analysis of UAVs]()*, to be presented at *[2021 IEEE International Conference on Computer Communications (INFOCOM)](https://infocom2021.ieee-infocom.org/)*. 
+
+AVIATOR can be used in variety of UAV-related applications. Having scientific studies as the primary use-case in mind, AVIATOR can be used to study the UAV traffic characteristics, to design UAV systems, to provide input traffic data for UAV/airborne simulators as well as emulators, or simply as a data traffic generator for other internet applications.   
+
+## Citation
+
+Please cite AVIATOR in your work if you find it useful:  
+
+```bibtex
+@inproceedings{aviator,
+  doi = {TBD},
+  url = {TBD},
+  year = {2021},
+  month = may,
+  publisher = {{IEEE}},
+  author = {A. {Baltaci}, M. {Kluegel}, F. {Geyer}, S. {Duhovnikov}, V. {Bajpai}, J. {Ott}, D. {Schupke}},
+  title = {Experimental UAV Data Traffic Modeling and Network Performance Analysis},
+  booktitle = {2021 {IEEE} International Conference on Computer Communications ({INFOCOM})}
+}
+```
 
 ## Dependencies
 **[Python3](https://www.python.org/download/releases/3.0/)**
@@ -31,9 +50,7 @@ Generated results are saved in the folder *outputfiles/*:
 - **.pdf**: The distribution graphs of the statistics in *.csv* file
 
 ## uav_datatraces.zip
-Sample of original UDP data traces of the UAVs (DJI Spark, DJI Mavic and Parrot AR 2.0) are provided to observe the actual UAV data traffic. For the details of the measurements, you may refer to the Section III of the paper. 
-
-Note that the MAC addresses are changed and the payloads are removed from the packets. 
+Sample of original UDP data traces of the UAVs (DJI Spark, DJI Mavic and Parrot AR 2.0) are provided to observe the actual UAV data traffic. For the details of the measurements, you may refer to the Section III of the paper. Note that the MAC addresses are changed and the payloads are removed from these traces. 
 
 ## Copyright
 This code is licensed under GNU General Public License v3.0. For further information, please refer to [LICENSE](LICENSE)
