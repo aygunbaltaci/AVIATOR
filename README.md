@@ -12,14 +12,16 @@ Please cite AVIATOR in your work if you find it useful:
 
 ```bibtex
 @inproceedings{aviator,
-  doi = {TBD},
-  url = {TBD},
-  year = {2021},
-  month = may,
-  publisher = {{IEEE}},
-  author = {A. {Baltaci} and M. {Kluegel} and F. {Geyer} and S. {Duhovnikov} and V. {Bajpai} and J. {Ott} and D. {Schupke}},
-  title = {Experimental UAV Data Traffic Modeling and Network Performance Analysis},
-  booktitle = {2021 {IEEE} International Conference on Computer Communications ({INFOCOM})}
+  Author = {A. {Baltaci} and M. {Kluegel} and F. {Geyer} and S. {Duhovnikov} and V. {Bajpai} and J. {Ott} and D. {Schupke}},
+  Title = {Experimental UAV Data Traffic Modeling and Network Performance Analysis},
+  Booktitle = {2021 {IEEE} International Conference on Computer Communications ({INFOCOM})}
+  Year = {2021},
+  Month = may,
+  Volume={TBD},
+  Number={TBD},
+  Pages={TBD},
+  Doi = {TBD},
+  Url = {TBD},
 }
 ```
 
