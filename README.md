@@ -1,6 +1,6 @@
 # uAV communIcation dAta Traffic generatOR (AVIATOR) 
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Python 3](https://img.shields.io/badge/python-3-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
 AVIATOR is a UAV-RC data traffic generation tool based on the data distribution models derived from our experimental UAV measurements. It generates UDP packets according to the data rate, inter-packet interval and packet length distributions of commercial UAV-RC traffic (DJI Spark, DJI Mavic Air and Parrot Spark). AVIATOR records the generated packets as well as their statistical results. It is the outcome of our paper *[Experimental Data Traffic Modeling and Network Performance Analysis of UAVs]()*, to be presented at *[2021 IEEE International Conference on Computer Communications (INFOCOM)](https://infocom2021.ieee-infocom.org/)*. 
 
