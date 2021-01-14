@@ -17,11 +17,11 @@ If you use AVIATOR in your work, please cite the paper:
   Booktitle = {2021 {IEEE} International Conference on Computer Communications ({INFOCOM})}
   Year = {2021},
   Month = may,
-  Volume={TBD},
-  Number={TBD},
-  Pages={TBD},
-  Doi = {TBD},
-  Url = {TBD},
+  Volume={},
+  Number={},
+  Pages={},
+  Doi = {},
+  Url = {},
 }
 ```
 
