@@ -34,7 +34,7 @@ If you use AVIATOR in your work, please cite the paper:
 
 ## Usage
 **Run the program**
-> python3 generate_uavtraffic.py
+> python3 aviator.py
 
 **Optional parameters**:
 - *--uplink | -u* to generate packets for uplink channel
