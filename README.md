@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/) [![Code Grade](https://www.code-inspector.com/project/17761/status/svg)](https://www.code-inspector.com/project/17761/status/svg) [![Last Commit](https://img.shields.io/badge/last%20commit-january%202021-green)](https://img.shields.io/static/v1?label=last%20commit&message=january%202021&color=green) 
 
-AVIATOR is a UAV-RC data traffic generation tool based on the data distribution models derived from our experimental UAV measurements. It generates UDP packets according to the data rate, inter-packet interval and packet length distributions of commercial UAV-RC traffic (DJI Spark, DJI Mavic Air and Parrot AR 2.0). AVIATOR records the generated packets as well as their statistical results. It is the outcome of our paper *[Experimental Data Traffic Modeling and Network Performance Analysis of UAVs]()*, to be presented at *[2021 IEEE International Conference on Computer Communications (INFOCOM)](https://infocom2021.ieee-infocom.org/)*. 
+AVIATOR is a UAV-RC data traffic generation tool based on the data distribution models derived from our experimental UAV measurements. It generates UDP packets according to the data rate, inter-packet interval and packet length distributions of commercial UAV-RC traffic (DJI Spark, DJI Mavic Air and Parrot AR 2.0). AVIATOR records the generated packets as well as their statistical results. It is the outcome of our paper *[Experimental Data Traffic Modeling and Network Performance Analysis of UAVs](https://vaibhavbajpai.com/documents/papers/proceedings/drones-infocom-2021.pdf)*, to be presented at *[2021 IEEE International Conference on Computer Communications (INFOCOM)](https://infocom2021.ieee-infocom.org/)*. 
 
 AVIATOR can be utilized in variety of UAV-related works: E.g., to study the UAV traffic characteristics, to design UAV/airborne communication systems, to provide input traffic data for UAV/airborne simulators as well as emulators, or simply as a data traffic generator for other internet applications.   
 
@@ -14,14 +14,13 @@ If you use AVIATOR in your work, please cite the paper:
 @inproceedings{aviator,
   Author = {A. {Baltaci} and M. {Kluegel} and F. {Geyer} and S. {Duhovnikov} and V. {Bajpai} and J. {Ott} and D. {Schupke}},
   Title = {Experimental UAV Data Traffic Modeling and Network Performance Analysis},
-  Booktitle = {2021 {IEEE} International Conference on Computer Communications ({INFOCOM})}
+  Booktitle = {{IEEE} {INFOCOM} 2021 - {IEEE} Conference on Computer Communications}
   Year = {2021},
-  Month = may,
   Volume={},
   Number={},
-  Pages={},
-  Doi = {},
-  Url = {},
+  Pages={1-10},
+  Doi = {10.1109/INFOCOM42981.2021.9488878},
+  Url = {https://doi.org/10.1109/INFOCOM42981.2021.9488878},
 }
 ```
 
